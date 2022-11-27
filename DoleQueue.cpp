@@ -11,7 +11,6 @@ void turns(int n,int k,int a[],int last){
         
         if(a[i]!=0){
             j++;
-            // cout<<a[i]<<endl;
         }
         if(i==n)i=-1;
     }
