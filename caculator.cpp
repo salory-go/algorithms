@@ -3,6 +3,7 @@
 #include<iostream>
 #include "ListStock.cpp"
 #include<string>
+ #include<math.h>
 #define max 100
 
 using namespace std;
@@ -31,7 +32,7 @@ string push_operator(Stock* stock,char data,string number){
         }
     return number;
 }
-int turn_back(string s){
+string turn_back(string s){
     string number;
     Stock* stock;
     stock = creatNewStock();
@@ -49,10 +50,50 @@ int turn_back(string s){
         }
     }
     number = push_operator(stock,s[s.length()-1],number);
-    cout<<number;
-    return 1;
+    return number;
+}
+
+char cacluate(Stock* stock,char data){
+    int a=0,b=0;
+    b = atoi(pop_stock(stock).c_str());
+    a = atoi(pop_stock(stock).c_str());
+    
+    float c =0;
+    switch (data)
+    {
+    case '*':c=a*b;
+        break;
+    case '/':c=a/b;
+        break;
+    case '+':c=a+b;
+        break;
+    case '-':c=a-b;
+        break;
+    default:return 0;
+    }
+    return (char)c;
+}
+
+string eval(string s){
+    char data ;
+    Stock* stock;
+    stock = creatNewStock();
+    for(int i=0;i<s.length();i++){
+        data = s[i];
+        if(data<='9'&&data>='0'){
+            push_stock(stock,data);
+        }
+        else{
+            int c=0;
+            c =cacluate(stock,data);
+            data = c+'0';
+            push_stock(stock,data);
+        }
+    }
+    cout<<pop_stock(stock)<<endl;
+    return "1";
 }
 
 int main(){
-    turn_back("2+8/2-2");
+    eval(turn_back("2/2+8/4-2*1"));
 }
