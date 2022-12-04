@@ -1,7 +1,7 @@
 #include<cstdio>
 #include <map> 
 #include<iostream>
-#include "ListStock.cpp"
+#include "ListStockChar.cpp"
 #include<string>
  #include<math.h>
 #define max 100
