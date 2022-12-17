@@ -2,9 +2,11 @@
 #include<iostream>
 using namespace std;
 
+#define max 12
+
 typedef struct TNode
 {
-    int Data;
+    int Data=0;
     TNode* left;
     TNode* right;
 }TNode;
@@ -66,6 +68,89 @@ void printBinTreeRight(TNode* node){
      
 }
 
+typedef struct Node *PtrToNode;
+struct Node { /* 队列中的结点 */
+    TNode* Data;
+    PtrToNode Next;
+};
+typedef PtrToNode Position;
+
+struct QNode {
+    Position Front, Rear;  /* 队列的头、尾指针 */
+    int MaxSize;           /* 队列最大容量 */
+};
+typedef struct QNode *Queue;
+
+QNode* init(){
+    QNode* Q;
+    Q = (QNode*)malloc(sizeof(QNode));
+    Q->Front = Q->Rear = NULL;
+    Q->MaxSize = 0;
+    return Q;
+}
+
+int IsEmpty( Queue Q )
+{
+    if(Q->Rear ==NULL){
+        return 1;
+    }
+    else{
+        return 0;
+    }
+}
+
+void QNode_add(QNode* quene,TNode* data){
+    Node* node;
+    node = (Node*)malloc(sizeof(node));
+    node->Data = data;
+    node->Next = NULL;
+    if(IsEmpty(quene)){
+        quene->Front = node;
+        quene->Rear = node;
+    }
+    else{
+        quene->Rear->Next = node;
+        quene->Rear = node;
+    }
+    quene->MaxSize++;
+}
+
+TNode* DeleteQ( Queue Q )
+{
+    Position FrontCell; 
+    TNode* FrontElem;
+    
+    if  ( IsEmpty(Q) ) {
+        printf("队列空");
+        return 0;
+    }
+    else {
+        FrontCell = Q->Front;
+        if ( Q->Front == Q->Rear ) /* 若队列只有一个元素 */
+            Q->Front = Q->Rear = NULL; /* 删除后队列置为空 */
+        else                     
+            Q->Front = Q->Front->Next;
+        FrontElem = FrontCell->Data;
+
+        free( FrontCell );  /* 释放被删除结点空间  */
+        return  FrontElem;
+    }
+}
+
+void printBinTreeByQuene(TNode* node){
+    if(!node)return;
+    TNode* T; QNode* quene;
+    quene = init();
+    QNode_add(quene,node);
+    while( !IsEmpty(quene)){
+        T = DeleteQ(quene);
+        cout<<T->Data<<endl;
+        
+        if(T->left) QNode_add(quene,T->left);
+        if(T->right) QNode_add(quene,T->right);
+    }
+}
+
 int main(){
     TNode* tree;
     tree =initTree(tree,2);
@@ -74,6 +159,5 @@ int main(){
     tree = insertBinTree(tree,4);
     tree = insertBinTree(tree,1);
     // cout<<tree->left->Data<<endl;
-    
-    printBinTreeRight(tree);
+    printBinTreeByQuene(tree);
 }
