@@ -15,9 +15,38 @@ struct QNode {
 };
 typedef struct QNode *Queue;
 
-bool IsEmpty( Queue Q )
+QNode* init(){
+    QNode* Q;
+    Q = (QNode*)malloc(sizeof(QNode));
+    Q->Front = Q->Rear = NULL;
+    Q->MaxSize = 0;
+    return Q;
+}
+
+int IsEmpty( Queue Q )
 {
-    return ( Q->Front == NULL);
+    if(Q->Rear ==NULL){
+        return 1;
+    }
+    else{
+        return 0;
+    }
+}
+
+void QNode_add(QNode* quene,int data){
+    Node* node;
+    node = (Node*)malloc(sizeof(node));
+    node->Data = data;
+    node->Next = NULL;
+    if(IsEmpty(quene)){
+        quene->Front = node;
+        quene->Rear = node;
+    }
+    else{
+        quene->Rear->Next = node;
+        quene->Rear = node;
+    }
+    quene->MaxSize++;
 }
 
 int DeleteQ( Queue Q )
@@ -40,4 +69,14 @@ int DeleteQ( Queue Q )
         free( FrontCell );  /* 释放被删除结点空间  */
         return  FrontElem;
     }
+}
+
+int main(){
+    QNode* quene;
+    quene = init();
+    QNode_add(quene,10);
+    QNode_add(quene,20);
+    QNode_add(quene,30);
+    cout<<DeleteQ(quene)<<endl;
+    
 }
