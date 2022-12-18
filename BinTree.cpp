@@ -38,6 +38,74 @@ TNode* insertBinTree(TNode* tree,int data){
     return tree;
 }
 
+int BinTreeFindMax(TNode* tree){
+    int Max = tree->Data;
+    if(!tree->right){
+        return tree->Data;
+    }
+    else{
+        Max = BinTreeFindMax(tree->right);
+    }
+    return Max;
+}
+int BinTreeFindMin(TNode* tree){
+    int Min = tree->Data;
+    if(!tree->left){
+        return tree->Data;
+    }
+    else{
+        Min = BinTreeFindMax(tree->left);
+    }
+    return Min;
+}
+TNode* BinTreeFind(TNode* tree,int data){
+    TNode* result;
+    if(tree->Data == data){
+        return tree;
+    }
+    else if(data<tree->Data){
+        result = BinTreeFind(tree->left,data);
+    }
+    else if(data>tree->Data){
+        result = BinTreeFind(tree->right,data);
+    }
+    return result;
+}
+
+TNode* BinTreeDelete(TNode* tree,int data){
+    TNode* node;
+    node = initTree(node,1);
+    if(!tree){
+        cout<<"not found"<<endl;
+    }
+    else{
+        if(data<tree->Data){
+            tree->left = BinTreeDelete(tree->left,data);
+        }
+        else if(data>tree->Data){
+            tree->right = BinTreeDelete(tree->right,data);
+        }
+        else{
+            if(tree->left&&tree->right){
+                node->Data = BinTreeFindMin(tree->right);
+                tree->Data = node->Data;
+                tree->right = BinTreeDelete(tree->right,tree->Data);
+            }
+            else{
+                node = tree;
+                if(!tree->left){
+                    tree = tree->right;
+                }
+                else{
+                    tree = tree->left;
+                }
+                free(node);
+            }
+        }
+    }
+    return tree;
+}
+
 void printBinTreeLeft(TNode* node){
     if(node->left){
         printBinTreeLeft(node->left);
@@ -159,5 +227,6 @@ int main(){
     tree = insertBinTree(tree,4);
     tree = insertBinTree(tree,1);
     // cout<<tree->left->Data<<endl;
+    BinTreeDelete(tree,3);
     printBinTreeByQuene(tree);
 }
