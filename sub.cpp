@@ -3,7 +3,7 @@
 #include<iostream>
 
 using namespace std;
-
+//要先写一个比较函数，总是把数大的来减，最后再看要不要加符号
 bool cmp(vector<int> &A,vector<int> &B){
     if(A.size()!=B.size())return A.size()>B.size();
     for(int i=A.size()-1;i>=0;i--)
@@ -16,6 +16,7 @@ bool cmp(vector<int> &A,vector<int> &B){
 vector<int> sub(vector<int> &A,vector<int> &B){
     
     vector<int> C;
+    // t只能是1或者0，A[i]先减t再减B[i]（如果B还有）,对t的更新要注意t=0的归类
     for(int i=0, t=0;i<A.size();i++)
     {
         t = A[i]-t;
@@ -24,6 +25,7 @@ vector<int> sub(vector<int> &A,vector<int> &B){
         if(t<0)t=1;
         else t=0;
     }
+    // 结尾要去0
     while(C.size()>1&&C.back()==0)C.pop_back();
     return C;
 }
