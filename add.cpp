@@ -7,6 +7,7 @@ using namespace std;
 vector<int> add(vector<int> &A,vector<int> &B){
     vector<int> C;
     int t=0;
+    //模板 先判断A、B中是否有数，再加到t里再判断进十
     for(int i=0;i<A.size()||i<B.size();i++)
     {
         if(i<A.size())t+=A[i];
@@ -14,6 +15,7 @@ vector<int> add(vector<int> &A,vector<int> &B){
         C.push_back(t%10);
         t/=10;
     }
+    // 最后也要判断进十
     if(t)C.push_back(1);
     return C;
 }
@@ -22,6 +24,7 @@ int main(){
     string a,b;
     cin>>a>>b;
     vector<int> A,B;
+    // i赋值size（）-1 push——back a[i]-'0'
     for(int i=a.size()-1;i>=0;i--)A.push_back(a[i]-'0');
     for(int i=b.size()-1;i>=0;i--)B.push_back(b[i]-'0');
     
