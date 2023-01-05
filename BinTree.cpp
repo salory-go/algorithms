@@ -222,7 +222,6 @@ void printBinTreeByQuene(TNode* node){
 int main(){
     TNode* tree;
     tree =initTree(tree,2);
-    
     tree = insertBinTree(tree,3);
     tree = insertBinTree(tree,4);
     tree = insertBinTree(tree,1);
