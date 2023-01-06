@@ -19,18 +19,18 @@ int main(){
 
     vector<PII> res;
 
-    for(int i=0;i<alls.size();i++)
+    for(auto item:alls)
     {
-        int l = alls[i].first,r = alls[i].second;
+        int l = item.first,r = item.second;
         if(res.size()==0)res.push_back({l,r});
         else{
             int flag=1;
-            for(int j=0;j<res.size();j++)
+            for(auto it:res)
             {
                 //无交集
-                if(r<res[j].first||l>res[j].second)continue;
+                if(r<it.first||l>it.second)continue;
                 else{
-                    res[j] = {min(l,res[j].first),max(r,res[j].second)}; 
+                    it= {min(l,it.first),max(r,it.second)}; 
                     flag =0;
                 }
             }
