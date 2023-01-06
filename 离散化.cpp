@@ -1,24 +1,7 @@
 #include<iostream>
 #include<vector>
 #include<algorithm>
-/*
-vector <int> alls;//把所有可能用到的下标存储
-sort(alls.begin(),alls.end());//排序
-alls.erase(unique(alls.bein(),alls.end()),alls.emd());//把多余的下标去掉，先unique（把重复的丢在后面），在erase(把后面的去掉)
 
-int find(int x)
-{
-    int l=0,r = alls.size()-1;
-    while(l>r)
-    {
-        int mid = (l+r)/2;
-        if(alls[mid]>=x) r = mid;
-        else l = mid+1;
-    }
-    return r+1;
-}
-
-*/
 using namespace std;
 
 typedef pair<int,int> PII;
@@ -65,6 +48,7 @@ int main(){
     sort(alls.begin(),alls.end());
     alls.erase(unique(alls.begin(),alls.end()),alls.end());
     
+    
     for(auto item:add)
     {
         int x = find(item.first);
@@ -80,3 +64,4 @@ int main(){
     }
     return 0;
 }
+// 数据的映射是一个函数
