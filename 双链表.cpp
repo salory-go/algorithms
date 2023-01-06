@@ -1,35 +1,23 @@
 #include<iostream>
-#include<cstdio>
 using namespace std;
-
-const int M = 1e5+10;
-
-
-int e[M],Le[M],Re[M],head,end,indx;
-
+const int N = 1e5+10;
+int e[N],Le[N],Re[N],idx;
+// 初始化就要想好有左链表和右链表，并且下标要从2开始
 void init()
 {
     Le[1] = 0;
     Re[0] = 1;
-    indx = 2;
+    idx = 2;
 }
-void insert_left(int k,int x)
+// insert 的先后顺序
+void insert(int k,int x)
 {
-    e[indx] = x;
-    Re[indx] = k;
-    Le[indx] = Le[k];
-    Re[Le[k]] = indx;
-    Le[k] = indx++;
-}
-//! 当然在 K 的左边插入一个数 可以再写一个 ， 也可以直接调用我们这个函数，在 k 的左边插入一个 数 等价于在 l[k] 的右边插入一个数 add(l[k],x)
-
-void insert_right(int k,int x)
-{
-    e[indx] = x;
-    Re[indx] = Re[k];
-    Le[indx] = k;
-    Le[Re[k]] = indx;
-    Re[k] = indx++;
+    e[idx] = x;
+    Re[idx] = Re[k];
+    Le[idx] =  k;
+    Le[Re[k]] = idx;
+    Re[k] = idx++;
+    
 }
 
 void remove(int k)
@@ -42,41 +30,39 @@ int main(){
     int n;
     cin>>n;
     init();
-    while(n--){
-        string c;
-        cin>>c;
-        if(c=="L")
+    while(n--)
+    {
+        // 万恶的字符串
+        string op;
+        cin>>op;
+        if(op=="R")
         {
             int x;
             cin>>x;
-            insert_left(Re[0],x);
+            insert(Le[1],x);
         }
-        else if(c=="R")
+        else if(op=="L")
         {
             int x;
             cin>>x;
-             insert_right(Le[1],x);
+            insert(0,x);
         }
-        else if(c=="D")
+        else if(op=="IL")
         {
+            int x,k;
+            cin>>k>>x;
+            insert(Le[k+1],x);
+        }else if(op=="IR")
+        {
+            int x,k;
+            cin>>k>>x;
+            insert(k+1,x);
+        }
+        else if(op=="D"){
             int k;
             cin>>k;
             remove(k+1);
         }
-        else if(c=="IL")
-        {
-            int k,x;
-            cin>>k>>x;
-            insert_left(k+1,x);
-        }
-        else 
-        {
-            int k,x;
-            cin>>k>>x;
-            insert_right(k+1,x);
-        }
-         
-        // for(int i=0;i<1;i++)cout<<e[i];
     }
-    for(int i=Re[0];i!=1;i = Re[i])cout<<e[i]<<" ";
+    for(int i=Re[0];i!=1;i=Re[i])cout<<e[i]<<" ";
 }
