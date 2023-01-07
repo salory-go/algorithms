@@ -1,20 +1,13 @@
 #include<iostream>
 #include<cstdio>
 using namespace std;
+const int N = 1e5+10;
 
-const int N = 100010;
-
-int q[N],head=-1;
-
-string empty()
-{
-    if(head == -1)return "YES";
-    else return "NO";
-}
+int stk[N],head =0;
 
 void push(int x)
 {
-    q[++head] = x;
+    stk[++head] = x;
 }
 
 void pop()
@@ -22,27 +15,40 @@ void pop()
     head--;
 }
 
+bool empty()
+{
+    return head==0;
+}
+
 int query()
 {
-   return q[head]; 
+    return stk[head];
 }
 
 int main(){
-    int n;
+    int n,x;
     cin>>n;
-    while(n--){
-        string op;
-        
+    string op;
+    while(n--)
+    {
         cin>>op;
         if(op=="push")
         {
-            int x;
             cin>>x;
             push(x);
         }
-        else if(op=="empty")cout<<empty()<<endl;
-        else if(op=="pop")pop();
-        else cout<<query()<<endl;
+        else if(op=="pop")
+        {
+            pop();
+        }
+        else if(op=="empty")
+        {
+            if(empty())puts("YES");
+            else puts("NO");
+        }
+        else
+        {
+            cout<<query()<<endl;
+        }
     }
-    
 }
