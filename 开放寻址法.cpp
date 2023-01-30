@@ -1,15 +1,17 @@
-#include <cstdio>
 #include <cstring>
+#include <iostream>
+
 using namespace std;
 
-const int N  = 200003,null = 0x3f3f3f3f;
+const int N = 2e5+3;
+const int null = 0x3f3f3f3f;
 
 int h[N];
 
 int find(int x)
 {
     int k = (x%N+N)%N;
-    while(h[k]!=x&&h[k]!=null)
+    while(h[k]!=null&&h[k]!=x)
     {
         k++;
         if(k==N)k=0;
@@ -19,17 +21,24 @@ int find(int x)
 
 int main(){
     int n,x;
-    scanf("%d",&n);
-    memset(h,0x3f,sizeof h);
-    while(n--)
-    {
-        char op[2];
-        scanf("%s%d",op,&x);
-        int k=find(x);
-        if(*op=='I') h[k]=x;
-        else {
-            if(h[k]!=null) puts("Yes");
-            else puts("No");
+    cin>>n;
+    string op;
+    
+    memset(h,null,sizeof h);
+    
+    while (n--) {
+        string op;
+        int x;
+        cin >> op >> x;
+        if (op == "I") {
+            h[find(x)]=x;
+        } else {
+            if (h[find(x)]==null) {
+                puts("No");
+            } else {
+                puts("Yes");
+            }
         }
     }
+    return 0;
 }
